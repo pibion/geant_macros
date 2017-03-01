@@ -1,0 +1,55 @@
+# $Id: zip+radsrc.mac,v 1.5 2015/02/02 17:46:14 kelsey Exp $
+#
+# Macro file to generate radiogenic gammas using RadSrc around ZIP 
+#
+# 20111104  M. Kelsey -- Do rendered surface drawing instead of wireframe
+
+/control/verbose 0
+/run/verbose 0
+/CDMS/verbose 0
+
+# Configure detector (also defines subsequent commands)
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+
+# Position crystal with bottom at Z=0, to match DMC coordinates
+/CDMS/Zip/Position 0. 0. 1.6665 cm
+
+# Spherical source of gammas from old HEU, just as an example
+/CDMS/Source sphere
+/CDMS/Sphere/Radius 25 cm
+/CDMS/Sphere/Position 0. 0. 1.6665 cm
+/CDMS/Sphere/Inward true
+
+/CDMS/Shpere/Particle geantino
+#/CDMS/Sphere/Generator radsrc
+#/CDMS/RadSrc/input U238 0.90
+#/CDMS/RadSrc/input U235 0.10
+#/CDMS/RadSrc/input AGE  20.
+#/CDMS/RadSrc/update
+
+/CDMS/updateGeom
+
+#/vis/open OGLIX 600x600-0+0
+#/vis/verbose errors
+#/vis/viewer/set/style surface
+#/vis/viewer/set/autoRefresh false
+#/vis/viewer/set/upVector 0 0 1
+#/vis/viewer/set/viewpointThetaPhi 60 0		# Looking down from above
+#/vis/drawVolume
+
+#/vis/scene/add/trajectories
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add gamma
+#/vis/filtering/trajectories/particleFilter-0/add e-
+
+#/vis/scene/endOfEventAction accumulate
+#/vis/viewer/set/autoRefresh true
+
+/tracking/verbose 0
+/run/beamOn 100
+
+#/vis/viewer/flush
+#/vis/ogl/set/printFilename zip+radsrc
+#/vis/ogl/printEPS
+
