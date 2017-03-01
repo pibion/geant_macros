@@ -21,7 +21,7 @@
 /CDMS/Sphere/Position 0. 0. 1.6665 cm
 /CDMS/Sphere/Inward true
 
-/CDMS/Shpere/Particle geantino
+/CDMS/Sphere/Particle geantino
 #/CDMS/Sphere/Generator radsrc
 #/CDMS/RadSrc/input U238 0.90
 #/CDMS/RadSrc/input U235 0.10
